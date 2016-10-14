@@ -24,7 +24,7 @@ public class RecipeActivity extends AppCompatActivity {
     RecipeStore store = new RecipeStore(this, "recipes");
     String id = getIntent().getStringExtra(KEY_ID);
     final Recipe recipe = store.getRecipe(id);
-
+    
     if (recipe == null) {
       titleView.setVisibility(View.GONE);
       descriptionView.setText(R.string.recipe_not_found);
