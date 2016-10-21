@@ -19,4 +19,12 @@ public class InMemoryFavorites implements Favorites {
     values.put(id, !value);
     return !value;
   }
+
+  public void put(String id, boolean value) {
+    values.put(id, value);
+  }
+
+  public void clear() {
+    values.clear();
+  }
 }
