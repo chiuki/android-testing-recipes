@@ -1,0 +1,4 @@
+<resources>
+  <string name="app_name">Recipes</string>
+  <string name="empty">No recipes</string>
+</resources>

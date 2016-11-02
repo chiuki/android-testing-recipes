@@ -1,0 +1,9 @@
+id=punch
+Juice of 3 lemons
+1 orange
+title=Punch
+1 pint grape juice
+1 cup sugar
+1 cup water
+1 pine apple juice
+Mix all together and strain. Add large piece of ice.
