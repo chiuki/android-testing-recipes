@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.sqisland.tutorial.recipes.R;
 import com.sqisland.tutorial.recipes.data.local.RecipeStore;
 import com.sqisland.tutorial.recipes.data.model.Recipe;
+import com.sqisland.tutorial.recipes.data.local.SharedPreferencesFavorites;
 
 public class RecipeActivity extends AppCompatActivity {
   public static final String KEY_ID = "id";
@@ -29,8 +30,20 @@ public class RecipeActivity extends AppCompatActivity {
       descriptionView.setText(R.string.recipe_not_found);
       return;
     }
+    
+    final SharedPreferencesFavorites favorites = new SharedPreferencesFavorites(this);
+    boolean favorite = favorites.get(recipe.id);
 
     titleView.setText(recipe.title);
+    titleView.setSelected(favorite);
+    titleView.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        boolean result = favorites.toggle(recipe.id);
+        titleView.setSelected(result);
+      }
+    });
+
     descriptionView.setText(recipe.description);
   }
 }

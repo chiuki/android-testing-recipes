@@ -27,7 +27,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
   }
 
   @Override
-  public void onBindViewHolder(final RecipeViewHolder holder, final int position) {
+  public void onBindViewHolder(final RecipeViewHolder holder, int position) {
     final Recipe recipe = store.recipes.get(position);
     holder.textView.setText(recipe.title);
     holder.textView.setOnClickListener(new View.OnClickListener() {
