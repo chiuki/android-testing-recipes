@@ -1,6 +1,7 @@
 package com.sqisland.tutorial.recipes.ui.recipe.robolectric;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -30,5 +31,16 @@ public class RecipeActivityTest {
 
     TextView descriptionView = (TextView) activity.findViewById(R.id.description);
     assertEquals("Recipe not found", descriptionView.getText());
+  }
+
+  @Test
+  public void carrots() {
+    Intent intent = new Intent();
+    intent.putExtra(RecipeActivity.KEY_ID, "creamed_carrots");
+
+    Activity activity = Robolectric.buildActivity(RecipeActivity.class, intent).setup().get();
+
+    TextView titleView = (TextView) activity.findViewById(R.id.title);
+    assertEquals("Creamed Carrots", titleView.getText());
   }
 }
