@@ -15,6 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:drawableRight="@drawable/ic_favorite"
+        android:drawableEnd="@drawable/ic_favorite"
         android:textSize="24sp"/>
     <TextView
         android:id="@+id/description"
