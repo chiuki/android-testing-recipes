@@ -6,9 +6,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.sqisland.tutorial.recipes.R;
+import com.sqisland.tutorial.recipes.data.local.Favorites;
 import com.sqisland.tutorial.recipes.data.local.RecipeStore;
 import com.sqisland.tutorial.recipes.data.model.Recipe;
-import com.sqisland.tutorial.recipes.data.local.SharedPreferencesFavorites;
+import com.sqisland.tutorial.recipes.injection.RecipeApplication;
 
 public class RecipeActivity extends AppCompatActivity {
   public static final String KEY_ID = "id";
@@ -30,8 +31,9 @@ public class RecipeActivity extends AppCompatActivity {
       descriptionView.setText(R.string.recipe_not_found);
       return;
     }
-    
-    final SharedPreferencesFavorites favorites = new SharedPreferencesFavorites(this);
+
+    RecipeApplication app = (RecipeApplication) getApplication();
+    final Favorites favorites = app.getFavorites();
     boolean favorite = favorites.get(recipe.id);
 
     titleView.setText(recipe.title);
