@@ -8,44 +8,58 @@ import android.widget.TextView;
 import com.sqisland.tutorial.recipes.R;
 import com.sqisland.tutorial.recipes.data.local.Favorites;
 import com.sqisland.tutorial.recipes.data.local.RecipeStore;
-import com.sqisland.tutorial.recipes.data.model.Recipe;
 import com.sqisland.tutorial.recipes.injection.RecipeApplication;
 
-public class RecipeActivity extends AppCompatActivity {
+public class RecipeActivity extends AppCompatActivity implements RecipeContract.View {
   public static final String KEY_ID = "id";
+
+  private TextView titleView;
+  private TextView descriptionView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_recipe);
-
-    final TextView titleView = (TextView) findViewById(R.id.title);
-    TextView descriptionView = (TextView) findViewById(R.id.description);
+    
+    titleView = (TextView) findViewById(R.id.title);
+    descriptionView = (TextView) findViewById(R.id.description);
 
     RecipeStore store = new RecipeStore(this, "recipes");
-    String id = getIntent().getStringExtra(KEY_ID);
-    final Recipe recipe = store.getRecipe(id);
-    
-    if (recipe == null) {
-      titleView.setVisibility(View.GONE);
-      descriptionView.setText(R.string.recipe_not_found);
-      return;
-    }
 
     RecipeApplication app = (RecipeApplication) getApplication();
-    final Favorites favorites = app.getFavorites();
-    boolean favorite = favorites.get(recipe.id);
+    Favorites favorites = app.getFavorites();
 
-    titleView.setText(recipe.title);
-    titleView.setSelected(favorite);
+    final RecipePresenter presenter = new RecipePresenter(store, favorites, this);
+
+    String id = getIntent().getStringExtra(KEY_ID);
+    presenter.loadRecipe(id);
+
     titleView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        boolean result = favorites.toggle(recipe.id);
-        titleView.setSelected(result);
+        presenter.toggleFavorite();
       }
     });
+  }
 
-    descriptionView.setText(recipe.description);
+  @Override
+  public void showRecipeNotFoundError() {
+    titleView.setVisibility(View.GONE);
+    descriptionView.setText(R.string.recipe_not_found);
+  }
+
+  @Override
+  public void setTitle(String title) {
+    titleView.setText(title);
+  }
+
+  @Override
+  public void setDescription(String description) {
+    descriptionView.setText(description);
+  }
+
+  @Override
+  public void setFavorite(boolean favorite) {
+    titleView.setSelected(favorite);
   }
 }
