@@ -29,4 +29,9 @@ public class RecipePresenterTest {
     presenter.loadRecipe("no_such_recipe");
     Mockito.verify(view, Mockito.times(1)).showRecipeNotFoundError();
   }
+
+  @Test(expected = IllegalStateException.class)
+  public void toggleWithoutLoad() {
+    presenter.toggleFavorite();
+  }
 }
